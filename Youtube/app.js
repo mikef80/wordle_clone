@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const firstLetterId = guessedWordCount * 5 + 1;
         const interval = 200;
+        
         currentWordArr.forEach((letter, index) => {
             setTimeout(() => {
                 const tileColour = getTileColour(letter, index);
