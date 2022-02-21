@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildGrid() {
         
         // sets number of rows and columns
-        const rows = 3;
+        const rows = 6;
         // const cols = 3;
         const cols = 9;
         // const cols = 1;
