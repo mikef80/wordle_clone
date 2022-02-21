@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // getTileColour
     function getTileColour(digit, index) {
-      console.log(answer);
+      // console.log(answer);
       const isCorrectDigit = answer.includes(digit);
 
       if(!isCorrectDigit) {
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
       }
 
-      console.log(number);
+      // console.log(number);
       updateGuesses(number);
     })
 
