@@ -215,7 +215,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // KEYBOARD INPUT NUMBERS INTO GRID
 
     window.addEventListener("keyup", key => {
-      const number = key.key;
+      const number = Number(key.key);
+
+      // console.log(Number.isInteger(number));
+
+      if (!Number.isInteger(number)) {
+        console.log('You must enter numbers, not alphabetical characters!');
+        return;
+      }
                         
       if (number === 'Enter') {
           handleSubmitGuess();
