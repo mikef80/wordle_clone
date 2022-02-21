@@ -10,6 +10,12 @@ html, body {
     font-family: 'Fira Sans', sans-serif;
 }
 
+.flex {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -36,6 +42,10 @@ html, body {
 
 .keyboard-row button:hover {
     cursor: pointer;
+}
+
+.board-container {
+    width: 100%;
 }
 
 .board {

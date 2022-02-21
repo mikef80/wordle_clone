@@ -111,9 +111,18 @@ document.addEventListener('DOMContentLoaded', () => {
       return "rgb(181, 159, 59)";
     }
 
+    // update guess swatch
+    function updateGuessSwatch(input) {
+      const swatch = document.querySelector('.guess-colour')
+      let ColorVal = `rgb(${input[0]}${input[1]}${input[2]},${input[3]}${input[4]}${input[5]},${input[6]}${input[7]}${input[8]})`
+      swatch.style.backgroundColor = ColorVal;
+      console.log(ColorVal);
+    }
+
     // handleSubmitGuess
     function handleSubmitGuess() {
       const currentGuessArr = getCurrentGuessArr();
+      updateGuessSwatch(currentGuessArr);
 
       if (currentGuessArr.length !== 9) {
         window.alert('Guess must be 9 digits long!');
@@ -121,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const currentGuess = currentGuessArr.join('');
     
-
+      
       const firstDigitId = guessCount * 9 + 1;
       const interval = 200;
 
@@ -188,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
     // MOUSE INPUT NUMBERS INTO GRID
     keys.forEach(key => {
         key.onclick = ({target}) => {
@@ -195,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
             if (number === 'enter') {
                 handleSubmitGuess();
+                // updateGuessSwatch();
                 return;
             }
             
