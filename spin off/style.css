@@ -10,6 +10,12 @@ html, body {
     font-family: 'Fira Sans', sans-serif;
 }
 
+.flex {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -38,13 +44,18 @@ html, body {
     cursor: pointer;
 }
 
+.board-container {
+    width: 100%;
+}
+
 .board {
     display: grid;
 }
 
 .square {
-    width: 150px;
+    /* width: 150px; */
     /* width: 450px; */
+    width: 50px;
     height: 50px;
     border: 1px solid black;
     color: black;
@@ -56,4 +67,8 @@ html, body {
     width: 200px;
     height: 200px;
     border: 1px solid black;
+}
+
+.disclaimer {
+    font-size: 8px;
 }

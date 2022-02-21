@@ -2,21 +2,69 @@
 
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
 document.addEventListener('DOMContentLoaded', () => {
+
+    // LOCATION BITS!
+
+   /*  var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    }
+
+    function success(pos) {
+      var crd = pos.coords;
+
+      console.log(`Lat: ${crd.latitude}`);
+      console.log(`Long: ${crd.longitude}`);
+    }
+
+    function error() {
+      console.warn('Error');
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options); */
+
+    // END LOCATION BITS
+
+    let answer;
+    let outputAnswer;
+    // sets number of rows and columns
+    const rows = 6;
+    const cols = 9;
+    
     buildGrid();
     setSwatch();
 
+    const keys = document.querySelectorAll('.keyboard-row button');
+    
     const guessedRGB = [[]];
     let currentSquareNo = 1;
+    let guessCount = 0;
     
+    
+    function numConv(n) {
+      return Number(n);
+    }
     
     function setSwatch() {
         let totalColors = 256;
         
-        let r = Math.floor(Math.random() * totalColors);
-        let g = Math.floor(Math.random() * totalColors);
-        let b = Math.floor(Math.random() * totalColors);
+        let r = (Math.floor(Math.random() * totalColors)).toString().padStart(3, '0');
+        let g = (Math.floor(Math.random() * totalColors)).toString().padStart(3, '0');
+        let b = (Math.floor(Math.random() * totalColors)).toString().padStart(3, '0');
 
-        console.log(r, g, b);
+        /* console.log(r);
+        console.log(g);
+        console.log(b); */
+
+        outputAnswer = (`rgb(${r},${g},${b})`)
+
+
+        answer = (r + g + b);
+        // console.log(answer);
+        let answer2 = Array.from(String(answer), numConv); 
+
+        // console.log(answer2);
         
         const colour = `${r}, ${g}, ${b}`;
         const swatch = document.querySelector('.colour');
@@ -24,110 +72,182 @@ document.addEventListener('DOMContentLoaded', () => {
         swatch.style.backgroundColor = `rgb(${colour})`;
     }
 
+    // getCurrentGuessArray
+    function getCurrentGuessArr() {
+      const numbersofGuesses = guessedRGB.length;
+      return guessedRGB[numbersofGuesses - 1];
+    }
+
+    // updateGuesses
+    function updateGuesses(digit) {
+      const currentGuessArr = getCurrentGuessArr();
+
+      if(currentGuessArr && currentGuessArr.length < 9) {
+          currentGuessArr.push(digit);
+
+          const availableSpaceEl = document.getElementById(String(currentSquareNo));
+          currentSquareNo += 1;
+
+          availableSpaceEl.textContent = digit;
+      }
+    }
+
+    // getTileColour
+    function getTileColour(digit, index) {
+      // console.log(answer);
+      const isCorrectDigit = answer.includes(digit);
+
+      if(!isCorrectDigit) {
+        return "rgb(58, 58, 60)";
+      }
+
+      const digitInThatPosition = answer.charAt(index);
+      const isCorrectPosition = digit === digitInThatPosition;
+
+      if(isCorrectPosition) {
+        return "rgb(83, 141, 78)";
+      }
+
+      return "rgb(181, 159, 59)";
+    }
+
+    // update guess swatch
+    function updateGuessSwatch(input) {
+      const swatch = document.querySelector('.guess-colour')
+      let ColorVal = `rgb(${input[0]}${input[1]}${input[2]},${input[3]}${input[4]}${input[5]},${input[6]}${input[7]}${input[8]})`
+      swatch.style.backgroundColor = ColorVal;
+      console.log(ColorVal);
+    }
+
+    // handleSubmitGuess
+    function handleSubmitGuess() {
+      const currentGuessArr = getCurrentGuessArr();
+      updateGuessSwatch(currentGuessArr);
+
+      if (currentGuessArr.length !== 9) {
+        window.alert('Guess must be 9 digits long!');
+      }
+
+      const currentGuess = currentGuessArr.join('');
+    
+      
+      const firstDigitId = guessCount * 9 + 1;
+      const interval = 200;
+
+      currentGuessArr.forEach((digit, index) => {
+        setTimeout(() => {
+          const tileColour = getTileColour(digit, index);
+          const digitId = firstDigitId + index;
+          const digitEl = document.getElementById(digitId);
+          digitEl.classList.add('animate__flipInX');
+          // digitEl.style = `background-color:${tileColour}; border-color:${tileColour}`;
+          digitEl.style = `background-color:${tileColour};`;
+        }, interval * index);
+      })
+
+      guessCount += 1;
+
+      if (currentGuess === answer) {
+        window.alert('Congratulations!');
+        return;
+      }
+
+      if (guessedRGB.length === rows) {
+        window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
+        document.getElementById('test').textContent = outputAnswer;
+        return
+      }
+
+      guessedRGB.push([]);
+
+    }
 
 
-    const keys = document.querySelectorAll('.keyboard-row button');
-    // console.log(keys);
+    // handleDeleteDigit
+    function handleDeleteDigit() {
+      const currentGuessArr = getCurrentGuessArr();
+      const removedDigit = currentGuessArr.pop();
+
+      guessedRGB[guessedRGB.length - 1] = currentGuessArr;
+
+      const lastDigitEl = document.getElementById(String(currentSquareNo - 1));
+
+      lastDigitEl.textContent = '';
+      currentSquareNo = currentSquareNo - 1;
+    }
+
 
     // BUILD GAME GRID
     function buildGrid() {
         
-        // sets number of rows and columns
-        const rows = 5;
-        const cols = 3;
+        
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
-                // console.log(`${i}, ${j}`);
 
                 let square = document.createElement('div');
-                // square.textContent = "x";
-                // square.textContent = (j + 1) % 3;
                 let board = document.querySelector('.board');
                 board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-                square.classList.add('square','container');
+                square.classList.add('square','container','animate__animated');
                 square.id = (i * cols) + (j + 1);
                 board.appendChild(square);
 
             }
         }
-
-
-
-    }
-
-    function getCurrentNoArray() {
-        const numberOfGuesses = guessedRGB.length;
-        return guessedRGB[numberOfGuesses - 1];
     }
 
 
-
-    function updateGuessedNumbers(number) {
-        const currentNoArray = getCurrentNoArray();
-        const currentSpace = document.getElementById(String(currentSquareNo))
-        
-        
-        if(currentNoArray && currentNoArray.length < 3) {
+    // MOUSE INPUT NUMBERS INTO GRID
+    keys.forEach(key => {
+        key.onclick = ({target}) => {
+            const number = target.getAttribute('data-key');
+                        
+            if (number === 'enter') {
+                handleSubmitGuess();
+                // updateGuessSwatch();
+                return;
+            }
             
-            currentNoArray.push(number);
-            // console.log(currentNoArray);
-            currentSpace.textContent += number;
-            // console.log(currentSpace);
-            
-            
-            
-        } 
-        console.log(currentNoArray);
-        
-
-    }
-
-    function handleSubmittedNo() {
-        const currentSpace = document.getElementById(String(currentSquareNo))
-
-        // console.log(currentSquareNo % 3);
-
-        if (!(currentSquareNo % 3)) {
-            console.log('true');
-            console.log(currentSpace);
-        } else {
-            console.log('false');
-            console.log(currentSpace);
-            
-        }
-        currentSquareNo++;
-    }
-
-
-
-
-    for (let i = 0; i < keys.length; i++) {
-        keys[i].onclick = ({target}) => {
-            const input = target.getAttribute('data-key');
-
-            if (target.classList.contains('removed')) {
+            if (number === 'delete') {
+                handleDeleteDigit();
                 return;
             }
 
-            if (input === 'enter') {
-                handleSubmittedNo();
-                return
-            }
-
-            console.log(input);
-            updateGuessedNumbers(input);
+            // console.log(number);
+            updateGuesses(number);
+            
         }
-        
-    }
+    })
 
 
 
 
+    // KEYBOARD INPUT NUMBERS INTO GRID
 
+    window.addEventListener("keyup", key => {
+      const number = Number(key.key);
 
+      // console.log(Number.isInteger(number));
 
+      if (!Number.isInteger(number)) {
+        console.log('You must enter numbers, not alphabetical characters!');
+        return;
+      }
+                        
+      if (number === 'Enter') {
+          handleSubmitGuess();
+          return;
+      }
+      
+      if (number === 'Delete' || number === 'Backspace') {
+          handleDeleteDigit();
+          return;
+      }
+
+      // console.log(number);
+      updateGuesses(number);
+    })
 
 
 
