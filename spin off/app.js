@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setSwatch();
 
     const keys = document.querySelectorAll('.keyboard-row button');
+    
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // INPUT NUMBERS INTO GRID
+    // MOUSE INPUT NUMBERS INTO GRID
     keys.forEach(key => {
         key.onclick = ({target}) => {
             const number = target.getAttribute('data-key');
@@ -202,9 +203,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            console.log(number);
+            // console.log(number);
             updateGuesses(number);
             
         }
     })
+
+
+
+
+    // KEYBOARD INPUT NUMBERS INTO GRID
+
+    window.addEventListener("keyup", key => {
+      const number = key.key;
+                        
+      if (number === 'Enter') {
+          handleSubmitGuess();
+          return;
+      }
+      
+      if (number === 'Delete' || number === 'Backspace') {
+          handleDeleteDigit();
+          return;
+      }
+
+      console.log(number);
+      updateGuesses(number);
+    })
+
+
+
+
+
+
+
+
+
+
+
+
 })
