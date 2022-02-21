@@ -4,6 +4,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     let answer;
     let outputAnswer;
+    // sets number of rows and columns
+    const rows = 6;
+    const cols = 9;
     
     buildGrid();
     setSwatch();
@@ -115,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      if (guessedRGB.length === 3) {
+      if (guessedRGB.length === rows) {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
         document.getElementById('test').textContent = outputAnswer;
         return
@@ -143,11 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // BUILD GAME GRID
     function buildGrid() {
         
-        // sets number of rows and columns
-        const rows = 6;
-        // const cols = 3;
-        const cols = 9;
-        // const cols = 1;
+        
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
