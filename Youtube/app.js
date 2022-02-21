@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let guessedWordCount = 0;
 
     const keys = document.querySelectorAll('.keyboard-row button');
+    console.log(keys);
 
     // FUNCTION TO LINK INTO WORDS API
     function getNewWord() {
@@ -53,8 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getTileColour(letter, index) {
         const isCorrectLetter = word.includes(letter);
+        // trying to change keyboard colour in here
+                    
+        const letterKB = document.querySelector(`[data-key=${letter}]`)
+                    
+        // end of attempt
 
         if (!isCorrectLetter) {
+            letterKB.style.backgroundColor = 'rgb(20, 20, 20)'; // MORE STARTING HERE TOO
+            letterKB.style.color = 'rgb(100, 100, 100)';
+            const ltr = keys.indexOf('letter');
+            keys[ltr].classList.add('removed'); // UP TO HERE
             return "rgb(58, 58, 60)";
         }
 
@@ -64,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isCorrectPosition) {
             return "rgb(83, 141, 78)"
         }
+
 
         return "rgb(181, 159, 59)";
     }
@@ -152,6 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < keys.length; i++) {
         keys[i].onclick = ({target}) => {
             const letter = target.getAttribute('data-key');
+
+            if (target.classList.contains('removed')) {
+                return;
+            }
 
             if (letter === 'enter') {
                 handleSubmitWord();
