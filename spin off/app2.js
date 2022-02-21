@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function buildGrid() {
         
         // sets number of rows and columns
-        const rows = 5;
+        const rows = 1;
         const cols = 3;
         // const cols = 1;
 
@@ -51,43 +51,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
                 square.classList.add('square','container');
-                square.id = (i * cols) + (j + 1);
+                square.id = "sq" + ((i * cols) + (j + 1));
                 board.appendChild(square);
 
             }
         }
     }
-    
-    console.log(keys);
-
-    /* for (let i = 0; i < keys.length; i++) {
-        keys[i].onclick = ({target}) => {
-            
-            const letter = target.getAttribute('data-key');
-
-            console.log(letter);
-        }
-    } */
-
-
 
     // INPUT NUMBERS INTO GRID
     keys.forEach(key => {
         key.onclick = ({target}) => {
             const letter = target.getAttribute('data-key');
-            
-            console.log(letter);
-            console.log(`${currentSquareNo}`);
-            // let currentSq = document.querySelector("." + currentSquareNo);
-            let currentSq = document.getElementById('1');
-            // do {
-            currentSq.innerHTML += letter;
-
-            if (currentSq.innerHTML.length >= 3) {
-                console.log('too long');
-                currentSq = document.getElementById('2')
+                        
+            if (letter === 'enter') {
+                handleSubmitGuess();
+                return;
             }
-            // } while (currentSq.innerHTML.length < 3)
+            
+            if (letter === 'delete') {
+                handleDeleteNumber();
+                return;
+            }
+
+            console.log(letter);
+            updateGuessNumbers(number);
+            
         }
     })
 })
+
+
+/* console.log(letter);
+// console.log(`${currentSquareNo}`);
+// let currentSq = document.querySelector("#" + currentSquareNo);
+let currentSq = document.querySelector("#sq" + currentSquareNo);
+console.log(currentSq.id);
+// let currentSq = document.getElementById('1'); */
+
+
+
+/* if (currentSq.innerHTML.length === 3) {
+    console.log('too long');
+    currentSquareNo++;
+    currentSq = document.querySelector("#sq" + (currentSquareNo));
+    currentSq.innerHTML += letter;
+} else if (letter === 'delete') {
+    
+} else {
+    currentSq.innerHTML += letter;
+} */
