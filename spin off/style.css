@@ -58,3 +58,7 @@ html, body {
     height: 200px;
     border: 1px solid black;
 }
+
+.disclaimer {
+    font-size: 8px;
+}
