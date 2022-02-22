@@ -68,9 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log(answer2);
         
         const colour = `${r}, ${g}, ${b}`;
-        const swatch = document.querySelector('.colour');
-        
+        const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = `rgb(${colour})`;
+
+        console.log(swatch.offsetWidth);
     }
 
     // getCurrentGuessArray
