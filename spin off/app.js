@@ -29,8 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let answer;
     let outputAnswer;
     // sets number of rows and columns
-    const rows = 6;
+    const rows = 4;
     const cols = 9;
+    let currentLife = 1;
     
     buildGrid();
     setSwatch();
@@ -126,6 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (currentGuessArr.length !== 9) {
         window.alert('Guess must be 9 digits long!');
+        return
       }
 
       const currentGuess = currentGuessArr.join('');
@@ -146,11 +148,24 @@ document.addEventListener('DOMContentLoaded', () => {
       })
 
       guessCount += 1;
-
+      
       if (currentGuess === answer) {
         window.alert('Congratulations!');
         return;
       }
+      
+      /* if (currentGuess != answer) {
+        console.log('nope');
+        const life = document.querySelector('.strikes');
+        // life.classList.add('lost');
+        let code = document.createElement('div');
+        let thisLife = document.createTextNode(`${currentLife}`);
+        code.appendChild(thisLife);
+
+
+        life.appendChild(code);
+        return
+      } */
 
       if (guessedRGB.length === rows) {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
