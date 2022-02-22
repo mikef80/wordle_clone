@@ -240,16 +240,39 @@ document.addEventListener('DOMContentLoaded', () => {
       let intro = document.querySelector('.intro');
       intro.classList.toggle('show');
     }
+
+    function toggleHelp() {
+      console.log('help');
+      let help = document.querySelector('.helpdiv');
+      console.log(help);
+      help.classList.toggle('show');
+      console.log(help.classList);
+    }
+
+    function toggleStats() {
+      let stats = document.querySelector('.stats');
+      stats.classList.toggle('show');
+    }
     
-    // SHOW INFO
+    // SHOW STUFF
     let showInfo = document.querySelector('.fa-circle-info');
-    showInfo.addEventListener('click',toggleInfo);
+    showInfo.addEventListener('click', toggleInfo);
 
-    // HIDE INFO
-    let closeInfo = document.querySelector('.fa-xmark');
-    closeInfo.addEventListener('click',toggleInfo);
+    let showHelp = document.querySelector('.fa-circle-question');
+    showHelp.addEventListener('click', toggleHelp);
+    
+    let showStats = document.querySelector('.fa-chart-column');
+    showStats.addEventListener('click', toggleStats);
 
+    // HIDE STUFF
+    let closeInfo = document.querySelector('.intro-close');
+    closeInfo.addEventListener('click', toggleInfo);
 
+    let closeHelp = document.querySelector('.help-close');
+    closeHelp.addEventListener('click', toggleHelp);
+    
+    let closeStats = document.querySelector('.stats-close');
+    closeStats.addEventListener('click',toggleStats);
 
 
     // KEYBOARD INPUT NUMBERS INTO GRID

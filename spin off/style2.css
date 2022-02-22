@@ -43,7 +43,7 @@ html, body {
     /* padding: 1rem; */
 }
 
-.intro-text {
+.intro-text, .stats-text, .help-text {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,7 +110,6 @@ button:hover {
     
     width: 100%;
     height: 200px;
-    
     border: 1px solid black;
 }
 
@@ -125,7 +124,7 @@ button:hover {
     text-decoration: line-through;
 }
 
-.intro {
+.intro, .stats, .helpdiv {
     display: none;
     position: absolute;
     /* top:50px; */
@@ -182,3 +181,8 @@ i {
 .inline {
     display: flex;
 }
+
+.help * {
+    padding: 0.25rem;
+}
+
