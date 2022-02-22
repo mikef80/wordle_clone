@@ -195,8 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // BUILD GAME GRID
     function buildGrid() {
-        
-        
 
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
@@ -235,6 +233,21 @@ document.addEventListener('DOMContentLoaded', () => {
             
         }
     })
+
+
+    // TOGGLE INFO
+    function toggleInfo() {
+      let intro = document.querySelector('.intro');
+      intro.classList.toggle('show');
+    }
+    
+    // SHOW INFO
+    let showInfo = document.querySelector('.fa-circle-info');
+    showInfo.addEventListener('click',toggleInfo);
+
+    // HIDE INFO
+    let closeInfo = document.querySelector('.fa-xmark');
+    closeInfo.addEventListener('click',toggleInfo);
 
 
 
