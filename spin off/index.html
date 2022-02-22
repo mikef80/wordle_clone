@@ -6,31 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="./app.js"></script>
-    <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/9d17d6bd20.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style2.css">
     <title>Colourdle!</title>
 </head>
 <body>
     <div class="container">
         <div class="game">
-            <header>
+            <header class="flex">
+                <img src="" alt="" srcset="">
                 <h1>Colourdle!</h1>
-                <h6>It's like Wordle, but not as fun<sup>TM</sup></h6>
+                <i class="fa-solid fa-circle-info"></i>
+                <!-- <h1><i class="fa-solid fa-circle-info"></i></h1> -->
+                <!-- <h6>It's like Wordle, but not as fun<sup>TM</sup></h6> -->
             </header>
-            <br />
             <div class="intro">
+                <br />
                 <p>Welcome to Colourdle!</p>
                 <br />
                 <p>The object of the game/exercise is to guess the RGB value of the displayed colour swatch.  First three columns are for the R(ed) value, next three are for the G(reen) value and last three are for the B(lue) value.</p>
                 <br />
                 <p>You must use leading zeros (for example, 053, not 53) else you'll break everything. At the end of the line, press or click enter to submit your answer. The rest should be fairly straight forward.</p>
             </div>
-            <br />
+            <!-- <br />
+            <div class="strikes flex">
+            </div>
+            <br /> -->
             <div class="colour-display flex">
-                <div>
+                <div class="swatch">
                     <p>Target:</p>
                     <div class="colour"></div>
                 </div>
-                <div>
+                <div class="swatch">
                     <p>Last Guess:</p>
                     <div class="colour guess-colour"></div>
                 </div>
@@ -41,7 +48,7 @@
             
             
             
-            <div class="board-container">
+            <div class="board-container flex">
                 <div class="board"></div>
             </div>
             <br />
@@ -65,8 +72,8 @@
                 </div>
                 <div class="keyboard-row">
                     <button data-key="0">0</button>
-                    <button data-key="enter">Enter</button>
-                    <button data-key="delete">Delete</button>
+                    <button class="enter" data-key="enter">E</button>
+                    <button class="delete" data-key="delete">Delete</button>
                 </div>
             </div>
 
