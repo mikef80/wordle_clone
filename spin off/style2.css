@@ -5,11 +5,6 @@
     padding: 0;
 }
 
-:root {
-    --swatch-width: 100fr;
-    --swatch-height: calc(var(--swatch-width));
-}
-
 html, body {
     height: 100vh;
     font-family: 'Fira Sans', sans-serif;
@@ -186,3 +181,8 @@ i {
     padding: 0.25rem;
 }
 
+@media only screen and (min-width:415px) {
+    .board-container {
+        width: 100%;
+    }
+}
