@@ -3,29 +3,6 @@
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
 document.addEventListener('DOMContentLoaded', () => {
 
-    // LOCATION BITS!
-
-   /*  var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    }
-
-    function success(pos) {
-      var crd = pos.coords;
-
-      console.log(`Lat: ${crd.latitude}`);
-      console.log(`Long: ${crd.longitude}`);
-    }
-
-    function error() {
-      console.warn('Error');
-    }
-
-    navigator.geolocation.getCurrentPosition(success, error, options); */
-
-    // END LOCATION BITS
-
     let answer;
     let outputAnswer;
     // sets number of rows and columns
@@ -36,14 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
     
     buildGrid();
     setSwatch();
+    initLocalStorage();
 
     const keys = document.querySelectorAll('.keyboard-row button');
     
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;
+    let currentGuessIndex = 0;
+
+    function initLocalStorage() {
+      const storedCurrentGuessIndex = window.localStorage.getItem('currentGuessIndex');
+      if (!storedCurrentGuessIndex) {
+        window.localStorage.setItem('currentGuessIndex', currentGuessIndex);
+      } else {
+        currentGuessIndex = Number(storedCurrentGuessIndex);
+      }
+
+
+
+    }
     
-    
+    function updateGuessIndex() {
+      window.localStorage.setItem('currentGuessIndex', currentGuessIndex + 1);
+    }
+
+
     function numConv(n) {
       return Number(n);
     }
@@ -154,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (currentGuess === answer) {
         window.alert('Congratulations!');
+        updateGuessIndex();
         return;
       }
       
@@ -173,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (guessedRGB.length === rows) {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
         document.getElementById('test').textContent = outputAnswer;
+        updateGuessIndex();
         return
       }
 
@@ -304,16 +301,4 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log(number);
       updateGuesses(number);
     })
-
-
-
-
-
-
-
-
-
-
-
-
 })
