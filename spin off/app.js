@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cols = 9;
     let currentLife = 1;
     let checkpoint = 0;
+    let currentColour = 0;
     
     buildGrid();
     setSwatch();
@@ -20,24 +21,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;
-    let currentGuessIndex = 0;
 
     function initLocalStorage() {
-      const storedCurrentGuessIndex = window.localStorage.getItem('currentGuessIndex');
-      if (!storedCurrentGuessIndex) {
-        window.localStorage.setItem('currentGuessIndex', currentGuessIndex);
+      // console.log('colour: ' + currentColour);
+      const storedCurrentColour = window.localStorage.getItem('currentColour');
+      // console.log(storedCurrentColour);
+      if (!storedCurrentColour) {
+        // console.log('initTrue');
+        // console.log(currentColour);
+        window.localStorage.setItem('currentColour', currentColour);
       } else {
-        currentGuessIndex = Number(storedCurrentGuessIndex);
+        // console.log('initFalse');
+        currentColour = Number(storedCurrentColour);
       }
 
 
 
     }
-    
-    function updateGuessIndex() {
-      window.localStorage.setItem('currentGuessIndex', currentGuessIndex + 1);
-    }
-
 
     function numConv(n) {
       return Number(n);
@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const colour = `${r}, ${g}, ${b}`;
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = `rgb(${colour})`;
-
+        currentColour = answer;
+        // console.log(currentColour);
         console.log(swatch.offsetWidth);
     }
 
@@ -149,32 +150,31 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (currentGuess === answer) {
         window.alert('Congratulations!');
-        updateGuessIndex();
+        const totalWins = window.localStorage.getItem('totalWins') || 0;
+        window.localStorage.setItem('totalWins', Number(totalWins) + 1);
+        const currentStreak = window.localStorage.getItem('currentStreak') || 0;
+        window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
+        updateTotalGames()
         return;
       }
-      
-      /* if (currentGuess != answer) {
-        console.log('nope');
-        const life = document.querySelector('.strikes');
-        // life.classList.add('lost');
-        let code = document.createElement('div');
-        let thisLife = document.createTextNode(`${currentLife}`);
-        code.appendChild(thisLife);
-
-
-        life.appendChild(code);
-        return
-      } */
 
       if (guessedRGB.length === rows) {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
         document.getElementById('test').textContent = outputAnswer;
-        updateGuessIndex();
+        window.localStorage.setItem('currentStreak', Number(0));
+        updateTotalGames()
         return
       }
 
       guessedRGB.push([]);
 
+    }
+
+
+    // update total games
+    function updateTotalGames() {
+      const totalGames = window.localStorage.getItem('totalGames') || 0;
+      window.localStorage.setItem('totalGames', Number(totalGames) + 1);
     }
 
 
