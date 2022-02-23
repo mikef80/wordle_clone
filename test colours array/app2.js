@@ -1,77 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const loadColours = async () => {
-        let response = await fetch('./test.txt');
-
-        if (!response.ok) {
-            throw new Error(`Error step 1`);
-            return;
-        }
-
-        let json = await response.json();
-
-        console.log(response);
-        console.log(json);
-    }
-
-    loadColours();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     const colours = document.querySelector('.colours');
     const grid = document.querySelector('.grid');
 
@@ -94,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let gridRowCols = Math.ceil(Math.sqrt(dayDiff));
     let height = window.innerHeight;
+    let width = window.innerWidth;
+
     let sqDim = height / gridRowCols;
     grid.style.gridTemplateColumns = `repeat(${gridRowCols}, 1fr)`;
         
@@ -103,12 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let b = Math.floor(Math.random() * 256);
     
         let output = `rgb(${r}, ${g}, ${b})`;
-        let arrOP = `[${r}, ${g}, ${b}]`;
+        // let arrOP = `[${r}, ${g}, ${b}]`;
+        let arrOP = [r, g, b];
         // console.log(arrOP);
         array.push(arrOP);
 
         let node = document.createElement('div');
         node.classList.add('swatch');
+        node.id = i;
         node.style.height = `${sqDim}px`;
         node.style.width = `${sqDim}px`;
         
@@ -117,7 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         colours.appendChild(node);
     }
 
-
-
-    
+    // console.log(array);
+    const array2 = JSON.stringify(array);
+    console.log(array2);
 })
+

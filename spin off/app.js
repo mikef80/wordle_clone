@@ -1,5 +1,9 @@
 // zero is false
 
+import {array} from '../test colours array/app2.js';
+
+// console.log(array[1]);
+
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
 document.addEventListener('DOMContentLoaded', () => {
 

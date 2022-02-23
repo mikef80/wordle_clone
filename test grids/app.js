@@ -1,5 +1,6 @@
 let cols = 3;
 let rows = 3;
+let n = 0;
 
 // TEST ONE
 
@@ -12,7 +13,9 @@ for (let i = 0; i < rows; i++) {
 
         square.classList.add('square');
         // square.id = (i * cols) + (j + 1);
-        square.id = (i) + (j + 1);
+        // square.id = (i) + (j + 1);
+        square.id = n;
+        n++;
         square.textContent = `${square.id} (${i}, ${j})`;
         // square.textContent = `i:${i}, j:${j}`;
         gridOne.appendChild(square);
@@ -29,7 +32,9 @@ for (let i = 0; i < rows; i++) {
 
         square.classList.add('square');
         // square.id = (i * cols) + (j + 1);
-        square.id = (i) + (j + 4);
+        // square.id = (i) + (j + 4);
+        square.id = n;
+        n++;
         square.textContent = `${square.id} (${i}, ${j})`;
         // square.textContent = `i:${i}, j:${j}`;
         gridOne.appendChild(square);
@@ -46,7 +51,9 @@ for (let i = 0; i < rows; i++) {
 
         square.classList.add('square');
         // square.id = (i * cols) + (j + 1);
-        square.id = (i) + (j + 7);
+        // square.id = (i) + (j + 7);
+        square.id = n;
+        n++;
         square.textContent = `${square.id} (${i}, ${j})`;
         // square.textContent = `i:${i}, j:${j}`;
         gridOne.appendChild(square);
