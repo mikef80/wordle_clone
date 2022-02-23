@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rows = 4;
     const cols = 9;
     let currentLife = 1;
+    let checkpoint = 0;
     
     buildGrid();
     setSwatch();
@@ -149,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
 
       guessCount += 1;
+      checkpoint += 9;
       
       if (currentGuess === answer) {
         window.alert('Congratulations!');
@@ -186,10 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       guessedRGB[guessedRGB.length - 1] = currentGuessArr;
 
-      const lastDigitEl = document.getElementById(String(currentSquareNo - 1));
+      let lastDigitEl = document.getElementById(Number(currentSquareNo - 1));
 
-      lastDigitEl.textContent = '';
-      currentSquareNo = currentSquareNo - 1;
+      if(lastDigitEl.id != checkpoint) {
+        lastDigitEl.textContent = '';
+        currentSquareNo = currentSquareNo - 1;
+      }
     }
 
 
