@@ -1,0 +1,123 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    const loadColours = async () => {
+        let response = await fetch('./test.txt');
+
+        if (!response.ok) {
+            throw new Error(`Error step 1`);
+            return;
+        }
+
+        let json = await response.json();
+
+        console.log(response);
+        console.log(json);
+    }
+
+    loadColours();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const colours = document.querySelector('.colours');
+    const grid = document.querySelector('.grid');
+
+    let array = [];
+    
+
+    // TARGET DATE
+    const target = new Date('12/31/2022');
+    // TODAY'S DATE
+    const today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    // CALCULCATE TIME DIFFERENCE IN DAYS
+    let timeDiff = target.getTime() - today.getTime();
+    const mill = 1000 * 3600 * 24;
+    let dayDiff = Math.ceil(timeDiff / mill);    
+    let ddSqrt = Math.sqrt(dayDiff);
+    let noOfDaysToCalc = Math.pow(Math.ceil(ddSqrt), 2);
+
+    let gridRowCols = Math.ceil(Math.sqrt(dayDiff));
+    let height = window.innerHeight;
+    let sqDim = height / gridRowCols;
+    grid.style.gridTemplateColumns = `repeat(${gridRowCols}, 1fr)`;
+        
+    for (let i = 0; i < noOfDaysToCalc; i++) {
+        let r = Math.floor(Math.random() * 256);
+        let g = Math.floor(Math.random() * 256);
+        let b = Math.floor(Math.random() * 256);
+    
+        let output = `rgb(${r}, ${g}, ${b})`;
+        let arrOP = `[${r}, ${g}, ${b}]`;
+        // console.log(arrOP);
+        array.push(arrOP);
+
+        let node = document.createElement('div');
+        node.classList.add('swatch');
+        node.style.height = `${sqDim}px`;
+        node.style.width = `${sqDim}px`;
+        
+        node.style.backgroundColor = `${output}`;
+
+        colours.appendChild(node);
+    }
+
+
+
+    
+})
