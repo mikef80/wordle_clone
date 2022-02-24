@@ -1,30 +1,11 @@
 // zero is false
 
+import {array} from '../test colours array/app2.js';
+
+// console.log(array[1]);
+
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
 document.addEventListener('DOMContentLoaded', () => {
-  
-    // LOCATION BITS!
-
-   /*  var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    }
-
-    function success(pos) {
-      var crd = pos.coords;
-
-      console.log(`Lat: ${crd.latitude}`);
-      console.log(`Long: ${crd.longitude}`);
-    }
-
-    function error() {
-      console.warn('Error');
-    }
-
-    navigator.geolocation.getCurrentPosition(success, error, options); */
-
-    // END LOCATION BITS
 
     let answer;
     let outputAnswer;
@@ -33,17 +14,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const cols = 9;
     let currentLife = 1;
     let checkpoint = 0;
+    let currentColour = 0;
     
     buildGrid();
     setSwatch();
+    initLocalStorage();
 
     const keys = document.querySelectorAll('.keyboard-row button');
     
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;
-    
-    
+
+    function initLocalStorage() {
+      // console.log('colour: ' + currentColour);
+      const storedCurrentColour = window.localStorage.getItem('currentColour');
+      // console.log(storedCurrentColour);
+      if (!storedCurrentColour) {
+        // console.log('initTrue');
+        // console.log(currentColour);
+        window.localStorage.setItem('currentColour', currentColour);
+      } else {
+        // console.log('initFalse');
+        currentColour = Number(storedCurrentColour);
+      }
+
+
+
+    }
+
     function numConv(n) {
       return Number(n);
     }
@@ -71,8 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const colour = `${r}, ${g}, ${b}`;
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = `rgb(${colour})`;
-
-        // console.log(swatch.offsetWidth);
+        currentColour = answer;
+        // console.log(currentColour);
+        console.log(swatch.offsetWidth);
     }
 
     // getCurrentGuessArray
@@ -154,30 +154,31 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (currentGuess === answer) {
         window.alert('Congratulations!');
+        const totalWins = window.localStorage.getItem('totalWins') || 0;
+        window.localStorage.setItem('totalWins', Number(totalWins) + 1);
+        const currentStreak = window.localStorage.getItem('currentStreak') || 0;
+        window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
+        updateTotalGames()
         return;
       }
-      
-      /* if (currentGuess != answer) {
-        console.log('nope');
-        const life = document.querySelector('.strikes');
-        // life.classList.add('lost');
-        let code = document.createElement('div');
-        let thisLife = document.createTextNode(`${currentLife}`);
-        code.appendChild(thisLife);
-
-
-        life.appendChild(code);
-        return
-      } */
 
       if (guessedRGB.length === rows) {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
         document.getElementById('test').textContent = outputAnswer;
+        window.localStorage.setItem('currentStreak', Number(0));
+        updateTotalGames()
         return
       }
 
       guessedRGB.push([]);
 
+    }
+
+
+    // update total games
+    function updateTotalGames() {
+      const totalGames = window.localStorage.getItem('totalGames') || 0;
+      window.localStorage.setItem('totalGames', Number(totalGames) + 1);
     }
 
 
@@ -304,16 +305,4 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log(number);
       updateGuesses(number);
     })
-
-
-
-
-
-
-
-
-
-
-
-
 })
