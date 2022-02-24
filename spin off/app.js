@@ -1,6 +1,6 @@
 // zero is false
 
-import {array} from '../test colours array/app2.js';
+// import {array} from '../test colours array/app2.js';
 
 // console.log(array[1]);
 
