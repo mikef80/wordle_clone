@@ -2,7 +2,7 @@
 
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
 document.addEventListener('DOMContentLoaded', () => {
-
+  
     // LOCATION BITS!
 
    /*  var options = {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = `rgb(${colour})`;
 
-        console.log(swatch.offsetWidth);
+        // console.log(swatch.offsetWidth);
     }
 
     // getCurrentGuessArray
