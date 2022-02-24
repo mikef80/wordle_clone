@@ -1,7 +1,16 @@
 // zero is false
 
-// import {array} from '../test colours array/app2.js';
+/* import {array} from './createArray.js';
 
+console.log(array);
+
+fs = require('fs');
+
+fs.readFile('./colourdleArray.txt', 'utf8', function (err,data) {
+    if (err) return console.log(err);
+    console.log(data);
+  });
+ */
 // console.log(array[1]);
 
 // THIS MAKES THE GAME LOAD ON PAGE LOAD
@@ -72,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         swatch.style.backgroundColor = `rgb(${colour})`;
         currentColour = answer;
         // console.log(currentColour);
-        console.log(swatch.offsetWidth);
+        // console.log(swatch.offsetWidth);
     }
 
     // getCurrentGuessArray

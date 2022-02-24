@@ -14,6 +14,8 @@ for (let i = 0; i < 365; i++) {
 
 let array2 = JSON.stringify(array);
 
+
+/* export {array2}; */
 // console.log(array);
 
 fs = require('fs');
