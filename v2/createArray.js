@@ -1,0 +1,23 @@
+const returnRandomColour = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    return [r,g,b];
+}
+
+let array = [];
+
+for (let i = 0; i < 365; i++) {
+    array.push(returnRandomColour());
+}
+
+let array2 = JSON.stringify(array);
+
+// console.log(array);
+
+fs = require('fs');
+fs.writeFile('./helloworld.txt', array2, function (err) {
+    if (err) return console.log(err);
+    console.log('Hello World > helloworld.txt');
+  });

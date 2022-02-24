@@ -5,25 +5,21 @@ let rows = 4; */
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // buildGrid(1,3);
     buildGrid(3,3);
+    // buildGrid(3,3);
 
     function buildGrid(rows,cols) {
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
     
                 let square = document.createElement('div');
-                let gridOne = document.querySelector('.test1');
-                gridOne.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                let boardOne = document.querySelector('.board-1');
+                boardOne.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     
-                square.classList.add('square');
-                // square.id = (i * cols) + (j + 1);
-                // square.id = (i * (cols * 3)) + (j + 1);
+                square.classList.add('square','container','animate__animated');
                 square.id = (i * (cols * 3)) + (j + ((0 * cols) + 1));
                 square.textContent = `${square.id}`;
-                // square.textContent = `${square.id} (${i}, ${j})`;
-                // square.textContent = `i:${i}, j:${j}`;
-                gridOne.appendChild(square);
+                boardOne.appendChild(square);
     
             }
         }
@@ -32,17 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = 0; j < cols; j++) {
     
                 let square = document.createElement('div');
-                let gridOne = document.querySelector('.test2');
-                gridOne.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                let boardTwo = document.querySelector('.board-2');
+                boardTwo.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     
-                square.classList.add('square');
-                // square.id = (i * cols) + (j + 1);
-                // square.id = (i * (cols * 3)) + (j + 4);
+                square.classList.add('square','container','animate__animated');
                 square.id = (i * (cols * 3)) + (j + ((1 * cols) + 1));
                 square.textContent = `${square.id}`;
-                // square.textContent = `${square.id} (${i}, ${j})`;
-                // square.textContent = `i:${i}, j:${j}`;
-                gridOne.appendChild(square);
+                boardTwo.appendChild(square);
     
             }
         }
@@ -51,17 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = 0; j < cols; j++) {
     
                 let square = document.createElement('div');
-                let gridOne = document.querySelector('.test3');
-                gridOne.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                let boardThree = document.querySelector('.board-3');
+                boardThree.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     
-                square.classList.add('square');
-                // square.id = (i * cols) + (j + 1);
-                // square.id = (i * (cols * 3)) + (j + 7);
+                square.classList.add('square','container','animate__animated');
                 square.id = (i * (cols * 3)) + (j + ((2 * cols) + 1));
                 square.textContent = `${square.id}`;
-                // square.textContent = `${square.id} (${i}, ${j})`;
-                // square.textContent = `i:${i}, j:${j}`;
-                gridOne.appendChild(square);
+                boardThree.appendChild(square);
     
             }
         }

@@ -21,7 +21,7 @@ body {
     justify-content: center;
 }
 
-.test1, .test2, .test3 {
+.board-1, .board-2, .board-3 {
     width: 50vh;
     aspect-ratio: 1 / 1;
     display: inline-grid;
