@@ -126,6 +126,7 @@ button:hover {
     height: 100vh;
     width: 100vw;
     background-color: white;
+    z-index: 1;
 }
 
 .keyboard-container {
@@ -139,7 +140,7 @@ i {
 }
 
 .show {
-    display: block;
+    display: flex;
 }
 
 .colouring :nth-child(1) {
