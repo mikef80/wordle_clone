@@ -17,7 +17,7 @@ let array2 = JSON.stringify(array);
 // console.log(array);
 
 fs = require('fs');
-fs.writeFile('./helloworld.txt', array2, function (err) {
+fs.writeFile('./colourdleArray.txt', array2, function (err) {
     if (err) return console.log(err);
-    console.log('Hello World > helloworld.txt');
+    console.log('createArray.js > colourdleArray.txt');
   });
