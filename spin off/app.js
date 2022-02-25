@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let answer;
     let outputAnswer;
     // sets number of rows and columns
-    const rows = 4;
+    const rows = 5;
     const cols = 9;
     let currentLife = 1;
     let checkpoint = 0;
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         answer = (r + g + b);
-        // console.log(answer);
+        console.log(answer);
         let answer2 = Array.from(String(answer), numConv); 
 
         // console.log(answer2);
