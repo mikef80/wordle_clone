@@ -77,7 +77,7 @@ button:hover {
 }
 
 .board-container {
-    width: 100vw;
+    width: 90vw;
 }
 
 .board {
@@ -139,9 +139,6 @@ i {
     align-self: center;
 }
 
-.show {
-    display: flex;
-}
 
 .colouring :nth-child(1) {
     color: red;
@@ -150,7 +147,7 @@ i {
     color: orange;
 }
 .colouring :nth-child(3) {
-    color: yellow;
+    color: gold;
 }
 .colouring :nth-child(4) {
     color: green;
@@ -197,22 +194,68 @@ i {
 }
 
 .score-modal {
+    display: none;
     position: fixed;
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: rgb(0,0,0,0.4);
-    display: flex;
+    background-color: rgb(0,0,0,0.6);
+    /* display: flex; */
     justify-content: center;
     align-items: center;
 }
 
 .scores {
-    height: 500px;
-    width: 500px;
+    display: inherit;
+    height: 85%;
+    width: 85%;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+}
+
+.scores-chart {
+    height: 50%;
+    width: 90%;
+    background-color: black;
+}
+    
+.show {
+    display: flex;
+}
+
+.scores-headline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 90%;
+    justify-items: center;
+}
+
+.scores-headline div {
     justify-content: center;
+}
+
+.scores-headline div :first-child {
+    font-size: 3rem;
+}
+
+.scores-headline div * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scores-footer {
+    display: flex;
+    width: 90%;
+    height: 5%;
+    justify-content: space-between;
+}
+
+.scores-countdown, .scores-share {
+    background-color: blue;
+    width: 45%;
+    height: 90%;
 }

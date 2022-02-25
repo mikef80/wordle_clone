@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let answer;
     let outputAnswer;
     // sets number of rows and columns
-    const rows = 4;
+    const rows = 5;
     const cols = 9;
     let currentLife = 1;
     let checkpoint = 0;
     let currentColour = 0;
     
-    buildGrid(3,3);
+    buildGrid(rows,3);
     setSwatch();
     // initLocalStorage();
 
@@ -281,15 +281,19 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('show scores modal');
       stats.classList.toggle('show');
     }
+
+    // UPDATE STATS SECTION
+
+    
     
     // SHOW STUFF
-    let showInfo = document.querySelector('.fa-circle-info');
+    let showInfo = document.querySelector('#info');
     showInfo.addEventListener('click', toggleInfo);
 
-    let showHelp = document.querySelector('.fa-circle-question');
+    let showHelp = document.querySelector('#help');
     showHelp.addEventListener('click', toggleHelp);
     
-    let showStats = document.querySelector('.fa-chart-column');
+    let showStats = document.querySelector('#stats');
     showStats.addEventListener('click', toggleStats);
 
     // HIDE STUFF
