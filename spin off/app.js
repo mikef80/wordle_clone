@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         answer = (r + g + b);
-        // console.log(answer);
+        console.log(answer);
         let answer2 = Array.from(String(answer), numConv); 
 
         // console.log(answer2);
