@@ -139,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
       checkpoint += 9;
       
       if (currentGuess === answer) {
+        // ADD MAX STREAK
         window.alert('Congratulations!');
         const totalWins = window.localStorage.getItem('totalWins') || 0;
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
@@ -284,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // UPDATE STATS SECTION
 
-    
+
     
     // SHOW STUFF
     let showInfo = document.querySelector('#info');
