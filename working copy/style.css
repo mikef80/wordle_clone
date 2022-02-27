@@ -179,12 +179,6 @@ i {
     padding: 0.25rem;
 }
 
-@media only screen and (min-width:415px) {
-    .board-container {
-        width: 100%;
-    }
-}
-
 .board-1, .board-2, .board-3 {
     width: 50vh;
     aspect-ratio: 1 / 1;
@@ -209,11 +203,17 @@ i {
     display: inherit;
     height: 85%;
     width: 85%;
+    max-width: 500px;
+    max-height:800px;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+
+.scores h1 {
+    text-transform: uppercase;
 }
 
 .scores-chart {
@@ -258,4 +258,10 @@ i {
     background-color: blue;
     width: 45%;
     height: 90%;
+}
+
+@media only screen and (min-width:415px) {
+    .board-container {
+        width: 100%;
+    }
 }

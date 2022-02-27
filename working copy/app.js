@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     buildGrid(rows,3);
     setSwatch();
+    updateStats();
     // initLocalStorage();
 
     const keys = document.querySelectorAll('.keyboard-row button');
@@ -21,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;
+    // let swatchColour = '';
     
 
     /* function initLocalStorage() {
@@ -50,12 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
         answer = masterColorArray[daysPassed];
 
         let swatchColour = `rgb(${answer[0]}${answer[1]}${answer[2]},${answer[3]}${answer[4]}${answer[5]},${answer[6]}${answer[7]}${answer[8]})`;
-
+        outputAnswer = swatchColour;
 
         console.log(answer);
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = swatchColour;
         currentColour = answer;
+        
         
       
     }
@@ -108,6 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(ColorVal);
     }
 
+    
+
     // handleSubmitGuess
     function handleSubmitGuess() {
       const currentGuessArr = getCurrentGuessArr();
@@ -145,8 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
         window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
+        
         updateTotalGames();
         updateLastPlayedDate();
+        updateStats();
         return;
       }
 
@@ -154,8 +161,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
         document.getElementById('test').textContent = outputAnswer;
         window.localStorage.setItem('currentStreak', Number(0));
+
+        
+        const totalLosses = window.localStorage.getItem('totalLosses') || 0;
+        window.localStorage.setItem('totalLosses', Number(totalLosses) + 1);
+
         updateTotalGames()
         updateLastPlayedDate();
+        updateStats();
         return
       }
 
@@ -285,7 +298,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // UPDATE STATS SECTION
 
+    function updateStats() {
+      const played = document.querySelector('.played-number');
+      const winPercentage = document.querySelector('.win-percent');
+      const currentStreak = document.querySelector('.current-streak');
+      const maxStreak = document.querySelector('.max-streak');
 
+      winPercentage.textContent = Math.floor(Number(window.localStorage.getItem('totalWins')) / Number(window.localStorage.getItem('totalGames')) * 100);
+      
+      let currentStreakLS = window.localStorage.getItem('currentStreak') || 0;
+      let maxStreakLS = window.localStorage.getItem('maxStreak') || 0;
+      
+      console.log(currentStreakLS);
+      console.log(maxStreakLS);
+
+
+      let maxStreakVar = (currentStreakLS > maxStreakLS) ? currentStreakLS : maxStreakLS;
+      maxStreak.textContent = maxStreakVar;
+      window.localStorage.setItem('maxStreak', maxStreakVar);
+      console.log('max' + maxStreakVar);
+
+      played.textContent = window.localStorage.getItem('totalGames') || 0;
+      // winPercentage.textContent = window.localStorage.getItem('winPercentage') || 0;
+      currentStreak.textContent = window.localStorage.getItem('currentStreak') || 0;
+      // maxStreak.textContent = window.localStorage.getItem('maxStreak') || 0;
+    }
     
     // SHOW STUFF
     let showInfo = document.querySelector('#info');
