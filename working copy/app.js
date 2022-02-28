@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
         window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
         
+        
         updateTotalGames();
         updateLastPlayedDate();
         updateStats();

@@ -8,6 +8,7 @@
 html, body {
     height: 100vh;
     font-family: 'Fira Sans', sans-serif;
+    background-color: #fff;
 }
 
 .flex {
@@ -258,6 +259,11 @@ i {
     background-color: blue;
     width: 45%;
     height: 90%;
+}
+
+#myChart, .myChart {
+    height: 300px;
+    width: 300px;
 }
 
 @media only screen and (min-width:415px) {
