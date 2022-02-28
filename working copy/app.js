@@ -7,40 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let outputAnswer;
     // sets number of rows and columns
     const rows = 5;
-    const cols = 9;
-    // let currentLife = 1;
     let checkpoint = 0;
-    // let currentColour = 0;
     
     buildGrid(rows,3);
     setSwatch();
     updateStats();
-    // initLocalStorage();
-
+    
     const keys = document.querySelectorAll('.keyboard-row button');
     
     const guessedRGB = [[]];
     let currentSquareNo = 1;
-    let guessCount = 0;
-    // let swatchColour = '';
-    
-
-    /* function initLocalStorage() {
-      // console.log('colour: ' + currentColour);
-      const storedCurrentColour = window.localStorage.getItem('currentColour');
-      // console.log(storedCurrentColour);
-      if (!storedCurrentColour) {
-        // console.log('initTrue');
-        // console.log(currentColour);
-        window.localStorage.setItem('currentColour', currentColour);
-      } else {
-        // console.log('initFalse');
-        currentColour = Number(storedCurrentColour);
-      }
-
-
-
-    } */
+    let guessCount = 0;    
     
     function setSwatch() {
         let today = new Date();
@@ -58,9 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = swatchColour;
         currentColour = answer;
-        
-        
-      
     }
     
     // getCurrentGuessArray
@@ -94,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCorrectDigit = answer.includes(digit);
 
       if(!isCorrectDigit) {
-        // return "rgb(58, 58, 60)";
         return invalid;
       }
 
@@ -103,17 +76,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if(isCorrectPosition) {
         return correct;
-        // return "rgb(83, 141, 78)";
       }
 
       return valid;
-      // return "rgb(181, 159, 59)";
     }
 
     // update key colours
     function updateKeyColours(digit, color) {
       const key = document.querySelector(`[data-key = "${digit}"]`);
-      // console.log(key);
       key.style.backgroundColor = color;
 
     }
@@ -123,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const swatch = document.querySelector('.guess-colour')
       let ColorVal = `rgb(${input[0]}${input[1]}${input[2]},${input[3]}${input[4]}${input[5]},${input[6]}${input[7]}${input[8]})`
       swatch.style.backgroundColor = ColorVal;
-      // console.log(ColorVal);
     }
 
     
@@ -150,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const digitId = firstDigitId + index;
           const digitEl = document.getElementById(digitId);
           digitEl.classList.add('animate__flipInX');
-          // digitEl.style = `background-color:${tileColour}; border-color:${tileColour}`;
           digitEl.style = `background-color:${tileColour};`;
           updateKeyColours(digit, tileColour);
         }, interval * index);
@@ -169,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
         window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
         
-        
         updateTotalGames();
         updateLastPlayedDate();
         updateStats();
@@ -181,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('test').textContent = outputAnswer;
         window.localStorage.setItem('currentStreak', Number(0));
 
-        
         const totalLosses = window.localStorage.getItem('totalLosses') || 0;
         window.localStorage.setItem('totalLosses', Number(totalLosses) + 1);
 
@@ -234,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
               square.classList.add('square','container','animate__animated');
               square.id = (i * (cols * 3)) + (j + ((0 * cols) + 1));
-              // square.textContent = `${square.id}`;
               boardOne.appendChild(square);
   
           }
@@ -249,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
               square.classList.add('square','container','animate__animated');
               square.id = (i * (cols * 3)) + (j + ((1 * cols) + 1));
-              // square.textContent = `${square.id}`;
               boardTwo.appendChild(square);
   
           }
@@ -264,36 +228,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
               square.classList.add('square','container','animate__animated');
               square.id = (i * (cols * 3)) + (j + ((2 * cols) + 1));
-              // square.textContent = `${square.id}`;
               boardThree.appendChild(square);
   
           }
       }
   }
-
-
-    // MOUSE INPUT NUMBERS INTO GRID
-    keys.forEach(key => {
-        key.onclick = ({target}) => {
-            const number = target.getAttribute('data-key');
-                        
-            if (number === 'enter') {
-                handleSubmitGuess();
-                // updateGuessSwatch();
-                return;
-            }
-            
-            if (number === 'delete') {
-                handleDeleteDigit();
-                return;
-            }
-
-            // console.log(number);
-            updateGuesses(Number(number));
-            
-        }
-    })
-
 
     // TOGGLE INFO
     function toggleInfo() {
@@ -330,9 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.localStorage.setItem('maxStreak', maxStreakVar);
 
       played.textContent = window.localStorage.getItem('totalGames') || 0;
-      // winPercentage.textContent = window.localStorage.getItem('winPercentage') || 0;
       currentStreak.textContent = window.localStorage.getItem('currentStreak') || 0;
-      // maxStreak.textContent = window.localStorage.getItem('maxStreak') || 0;
     }
     
     // SHOW STUFF
@@ -357,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // KEYBOARD INPUT NUMBERS INTO GRID
-
     window.addEventListener("keyup", key => {
       const input = key.key;
 
@@ -376,7 +312,26 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // console.log(number);
       updateGuesses(Number(input));
+    })
+
+    // MOUSE INPUT NUMBERS INTO GRID
+    keys.forEach(key => {
+      key.onclick = ({target}) => {
+          const number = target.getAttribute('data-key');
+                      
+          if (number === 'enter') {
+              handleSubmitGuess();
+              return;
+          }
+          
+          if (number === 'delete') {
+              handleDeleteDigit();
+              return;
+          }
+
+          updateGuesses(Number(number));
+          
+      }
     })
 })
