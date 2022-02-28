@@ -65,12 +65,12 @@ button {
     font-size: 0.1em;
 } */
 
-.enter {
-    content: '/2190';
+.enter::after {
+    content: '\23CE';
 }
 
-.delete {
-    content: '/2190';
+.delete::after {
+    content: '\232B';
 }
 
 button:hover {
@@ -262,6 +262,7 @@ i {
 }
 
 #myChart, .myChart {
+    display: none;
     height: 300px;
     width: 300px;
 }

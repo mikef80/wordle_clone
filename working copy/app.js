@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // sets number of rows and columns
     const rows = 5;
     const cols = 9;
-    let currentLife = 1;
+    // let currentLife = 1;
     let checkpoint = 0;
-    let currentColour = 0;
+    // let currentColour = 0;
     
     buildGrid(rows,3);
     setSwatch();
@@ -86,29 +86,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // getTileColour
     function getTileColour(digit, index) {
       // console.log(answer);
+
+      const correct = "rgb(83, 141, 78)";
+      const valid = "rgb(181, 159, 59)";
+      const invalid = "rgb(58, 58, 60)";
       
       const isCorrectDigit = answer.includes(digit);
 
       if(!isCorrectDigit) {
-        return "rgb(58, 58, 60)";
+        // return "rgb(58, 58, 60)";
+        return invalid;
       }
 
       const digitInThatPosition = Number(answer.charAt(index));
       const isCorrectPosition = digit === digitInThatPosition;
 
       if(isCorrectPosition) {
-        return "rgb(83, 141, 78)";
+        return correct;
+        // return "rgb(83, 141, 78)";
       }
 
-      return "rgb(181, 159, 59)";
+      return valid;
+      // return "rgb(181, 159, 59)";
     }
 
+    // update key colours
+    function updateKeyColours(digit, color) {
+      const key = document.querySelector(`[data-key = "${digit}"]`);
+      // console.log(key);
+      key.style.backgroundColor = color;
+
+    }
+    
     // update guess swatch
     function updateGuessSwatch(input) {
       const swatch = document.querySelector('.guess-colour')
       let ColorVal = `rgb(${input[0]}${input[1]}${input[2]},${input[3]}${input[4]}${input[5]},${input[6]}${input[7]}${input[8]})`
       swatch.style.backgroundColor = ColorVal;
-      console.log(ColorVal);
+      // console.log(ColorVal);
     }
 
     
@@ -137,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
           digitEl.classList.add('animate__flipInX');
           // digitEl.style = `background-color:${tileColour}; border-color:${tileColour}`;
           digitEl.style = `background-color:${tileColour};`;
+          updateKeyColours(digit, tileColour);
         }, interval * index);
       })
 
@@ -145,7 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (currentGuess === answer) {
         // ADD MAX STREAK
-        window.alert('Congratulations!');
+        setTimeout(() => {
+          window.alert('Congratulations!');
+        },interval * 9)
         const totalWins = window.localStorage.getItem('totalWins') || 0;
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
@@ -271,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // console.log(number);
-            updateGuesses(number);
+            updateGuesses(Number(number));
             
         }
     })
@@ -284,16 +302,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleHelp() {
-      console.log('help');
       let help = document.querySelector('.helpdiv');
-      console.log(help);
       help.classList.toggle('show');
-      console.log(help.classList);
     }
 
     function toggleStats() {
       let stats = document.querySelector('.score-modal');
-      console.log('show scores modal');
       stats.classList.toggle('show');
     }
 
@@ -307,17 +321,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       winPercentage.textContent = Math.floor(Number(window.localStorage.getItem('totalWins')) / Number(window.localStorage.getItem('totalGames')) * 100);
       
-      let currentStreakLS = window.localStorage.getItem('currentStreak') || 0;
-      let maxStreakLS = window.localStorage.getItem('maxStreak') || 0;
+      let currentStreakLS = Number(window.localStorage.getItem('currentStreak') || 0);
+      let maxStreakLS = Number(window.localStorage.getItem('maxStreak') || 0);
       
-      console.log(currentStreakLS);
-      console.log(maxStreakLS);
-
-
       let maxStreakVar = (currentStreakLS > maxStreakLS) ? currentStreakLS : maxStreakLS;
+      
       maxStreak.textContent = maxStreakVar;
       window.localStorage.setItem('maxStreak', maxStreakVar);
-      console.log('max' + maxStreakVar);
 
       played.textContent = window.localStorage.getItem('totalGames') || 0;
       // winPercentage.textContent = window.localStorage.getItem('winPercentage') || 0;
@@ -349,26 +359,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // KEYBOARD INPUT NUMBERS INTO GRID
 
     window.addEventListener("keyup", key => {
-      const number = Number(key.key);
+      const input = key.key;
 
-      // console.log(Number.isInteger(number));
+      if (input === 'Enter') {
+        handleSubmitGuess();
+        return;
+      }
+      
+      if (input === 'Delete' || input === 'Backspace') {
+        handleDeleteDigit();
+        return;
+      }
 
-      if (!Number.isInteger(number)) {
+      if (!Number.isInteger(Number(input))) {
         console.log('You must enter numbers, not alphabetical characters!');
         return;
       }
-                        
-      if (number === 'Enter') {
-          handleSubmitGuess();
-          return;
-      }
-      
-      if (number === 'Delete' || number === 'Backspace') {
-          handleDeleteDigit();
-          return;
-      }
 
       // console.log(number);
-      updateGuesses(number);
+      updateGuesses(Number(input));
     })
 })
