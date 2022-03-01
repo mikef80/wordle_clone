@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rows = 5;
     let checkpoint = 0;
     
+    currentPlayState();
     buildGrid(rows,3);
     setSwatch();
     updateStats();
@@ -18,6 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;    
+    
+    
+    // working on recording play state at any given time
+    function currentPlayState() {
+      let current = window.localStorage.getItem('currentPlayState') || [];
+      window.localStorage.setItem('currentPlayState', {1:'test'});
+    }
     
     function setSwatch() {
         let today = new Date();
@@ -35,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = swatchColour;
         currentColour = answer;
+        window.localStorage.setItem('currentColour', currentColour);
     }
     
     // getCurrentGuessArray
