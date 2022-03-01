@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // working on recording play state at any given time
     function currentPlayState() {
       let current = window.localStorage.getItem('currentPlayState') || [];
-      window.localStorage.setItem('currentPlayState', {1:'test'});
+      window.localStorage.setItem('currentPlayState', JSON.stringify({1:'test'}));
     }
     
     function setSwatch() {
