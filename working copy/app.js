@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCorrectDigit = answer.includes(digit);
 
       if(!isCorrectDigit) {
+        updateKeyColours(digit,'rgb(50, 50, 50)', 'black')
         return invalid;
       }
 
@@ -82,10 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // update key colours
-    function updateKeyColours(digit, color) {
+    function updateKeyColours(digit, bgcolor, fontcolor) {
       const key = document.querySelector(`[data-key = "${digit}"]`);
-      key.style.backgroundColor = color;
-
+      key.style.backgroundColor = bgcolor;
+      key.style.color = fontcolor;
     }
     
     // update guess swatch
@@ -120,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const digitEl = document.getElementById(digitId);
           digitEl.classList.add('animate__flipInX');
           digitEl.style = `background-color:${tileColour};`;
-          updateKeyColours(digit, tileColour);
+          // updateKeyColours(digit, tileColour);
         }, interval * index);
       })
 
