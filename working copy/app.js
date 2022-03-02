@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     
+    currentPlayState();
     buildGrid(rows,3);
     setSwatch();
     updateStats();
@@ -23,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const guessedRGB = [[]];
     let currentSquareNo = 1;
     let guessCount = 0;    
+    
+    
+    // working on recording play state at any given time
+    function currentPlayState() {
+      let current = window.localStorage.getItem('currentPlayState') || [];
+      window.localStorage.setItem('currentPlayState', JSON.stringify({1:'test'}));
+    }
     
     function setSwatch() {
         let today = new Date();
@@ -40,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = swatchColour;
         currentColour = answer;
+        window.localStorage.setItem('currentColour', currentColour);
     }
 
     // check if played today
@@ -86,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isCorrectDigit = answer.includes(digit);
 
       if(!isCorrectDigit) {
+        updateKeyColours(digit,'rgb(50, 50, 50)', 'black')
         return invalid;
       }
 
@@ -118,10 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // update key colours
-    function updateKeyColours(digit, color) {
+    function updateKeyColours(digit, bgcolor, fontcolor) {
       const key = document.querySelector(`[data-key = "${digit}"]`);
-      key.style.backgroundColor = color;
-
+      key.style.backgroundColor = bgcolor;
+      key.style.color = fontcolor;
     }
     
     // update guess swatch
