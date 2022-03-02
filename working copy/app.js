@@ -8,10 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // sets number of rows and columns
     const rows = 5;
     let checkpoint = 0;
+    let gameState = 'IN PROGRESS';
+
+
+    
     
     buildGrid(rows,3);
     setSwatch();
     updateStats();
+    checkPlayedToday();
     
     const keys = document.querySelectorAll('.keyboard-row button');
     
@@ -35,6 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const swatch = document.querySelector('.colour.target');
         swatch.style.backgroundColor = swatchColour;
         currentColour = answer;
+    }
+
+    // check if played today
+    function checkPlayedToday() {
+      let today = new Date().toLocaleDateString();
+      // console.log(today);
+      let lastPlayedDate = window.localStorage.getItem('lastPlayedDate') || 0;
+      // console.log(lastPlayedDate);
+      // console.log(today === lastPlayedDate);
+      if (today === lastPlayedDate) {
+        toggleStats();
+      }
+      // LOAD BOARD STATE HERE
     }
     
     // getCurrentGuessArray
@@ -81,6 +99,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return valid;
     }
 
+    // isTileCorrect
+    function isTileCorrect(digit, index) {
+      const isCorrectDigit = answer.includes(digit);
+
+      if(!isCorrectDigit) {
+        return 'invalid';
+      }
+
+      const digitInThatPosition = Number(answer.charAt(index));
+      const isCorrectPosition = digit === digitInThatPosition;
+
+      if(isCorrectPosition) {
+        return 'correct';
+      }
+
+      return 'valid';
+    }
+
     // update key colours
     function updateKeyColours(digit, color) {
       const key = document.querySelector(`[data-key = "${digit}"]`);
@@ -108,10 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const currentGuess = currentGuessArr.join('');
+
     
       
       const firstDigitId = guessCount * 9 + 1;
       const interval = 200;
+
+      let evalArr = [];
 
       currentGuessArr.forEach((digit, index) => {
         setTimeout(() => {
@@ -121,6 +160,17 @@ document.addEventListener('DOMContentLoaded', () => {
           digitEl.classList.add('animate__flipInX');
           digitEl.style = `background-color:${tileColour};`;
           updateKeyColours(digit, tileColour);
+          const tileCorrect = isTileCorrect(digit, index);
+
+          // do board states and evaluations here
+          evalArr.push(tileCorrect);
+          let object = {
+            'boardEval' : evalArr,
+            'gameState' : gameState
+          }
+          window.localStorage.setItem('boardEval',JSON.stringify(object));
+
+
         }, interval * index);
       })
 
@@ -136,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
         window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
+        gameState = 'WON';
         
         updateTotalGames();
         updateLastPlayedDate();
@@ -150,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const totalLosses = window.localStorage.getItem('totalLosses') || 0;
         window.localStorage.setItem('totalLosses', Number(totalLosses) + 1);
+        gameState = 'LOST'
 
         updateTotalGames()
         updateLastPlayedDate();
@@ -158,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       guessedRGB.push([]);
+      // console.log(guessedRGB);
 
     }
 
@@ -169,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateLastPlayedDate() {
-      const lastPlayedDate = window.localStorage.getItem('lastPlayedDate') || 0;
+      lastPlayedDate = window.localStorage.getItem('lastPlayedDate') || 0;
       window.localStorage.setItem('lastPlayedDate', new Date().toLocaleDateString());
     }
 
@@ -258,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentStreak = document.querySelector('.current-streak');
       const maxStreak = document.querySelector('.max-streak');
 
-      winPercentage.textContent = Math.floor(Number(window.localStorage.getItem('totalWins')) / Number(window.localStorage.getItem('totalGames')) * 100);
+      winPercentage.textContent = Math.floor(Number(window.localStorage.getItem('totalWins')) / Number(window.localStorage.getItem('totalGames')) * 100) || 0;
       
       let currentStreakLS = Number(window.localStorage.getItem('currentStreak') || 0);
       let maxStreakLS = Number(window.localStorage.getItem('maxStreak') || 0);
