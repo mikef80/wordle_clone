@@ -33,15 +33,21 @@ document.addEventListener('DOMContentLoaded', () => {
       window.localStorage.setItem('currentPlayState', JSON.stringify({1:'test'}));
     }
 
-    // working on countdown
+    // COUNTDOWN TO NEXT COLOURDLE
     function countdown() {
       let clock = document.querySelector('.countdownClock');
-      let future = new Date();
-      future.setDate(future.getDate() + 1);
-      future.setHours(0,0,0,0)
-      let now = new Date();
-      console.log(future);
-      console.log(now);
+      setInterval(() => {
+        let future = new Date();
+        future.setDate(future.getDate() + 2);
+        future.setHours(0,0,0,0)
+        let now = new Date();
+        let diff = new Date(future - now);
+        let hours = String(diff.getHours() - 1).padStart(2,'0');
+        let minutes = String(diff.getMinutes()).padStart(2,'0');
+        let seconds = String(diff.getSeconds()).padStart(2,'0');
+        
+        clock.innerHTML = `${hours}:${minutes}:${seconds}`;
+      }, 1000)
       
     }
     
@@ -214,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalGames();
         updateLastPlayedDate();
         updateStats();
+        toggleStats();
         return;
       }
 
@@ -229,6 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalGames()
         updateLastPlayedDate();
         updateStats();
+        toggleStats();
         return
       }
 

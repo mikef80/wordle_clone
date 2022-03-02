@@ -257,7 +257,7 @@ i {
 
 .scores-countdown, .scores-share {
     /* background-color: blue; */
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     width: 45%;
     height: 90%;
     display: flex;
@@ -267,12 +267,13 @@ i {
 }
 
 .scores-countdown :first-child, .scores-share :first-child {
-    font-size: 1.0rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
 }
 
 .scores-countdown :nth-child(2), .scores-share :nth-child(2) {
-    font-size: 2.0rem;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
 }
 
 
