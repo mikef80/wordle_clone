@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     buildGrid(rows,3);
     setSwatch();
     updateStats();
+    countdown();
     checkPlayedToday();
     
     const keys = document.querySelectorAll('.keyboard-row button');
@@ -30,6 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function currentPlayState() {
       let current = window.localStorage.getItem('currentPlayState') || [];
       window.localStorage.setItem('currentPlayState', JSON.stringify({1:'test'}));
+    }
+
+    // working on countdown
+    function countdown() {
+      let clock = document.querySelector('.countdownClock');
+      let future = new Date();
+      future.setDate(future.getDate() + 1);
+      future.setHours(0,0,0,0)
+      let now = new Date();
+      console.log(future);
+      console.log(now);
+      
     }
     
     function setSwatch() {
