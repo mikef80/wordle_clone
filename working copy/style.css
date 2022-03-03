@@ -186,6 +186,7 @@ i {
     display: inline-grid;
     align-items: center;
     justify-items: center;
+    justify-content: center;
 }
 
 .score-modal {
