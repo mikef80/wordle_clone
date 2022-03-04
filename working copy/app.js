@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const rows = 5;
   let checkpoint = 0;
   let gameState = 'IN PROGRESS';
+  let guesses = [];
 
 
   
@@ -197,14 +198,18 @@ document.addEventListener('DOMContentLoaded', () => {
           'boardEval' : evalArr,
           'gameState' : gameState
         }
-        window.localStorage.setItem('boardEval',JSON.stringify(object));
-
-
+        
+        
       }, interval * index);
     })
-
+    
+    guesses.push(currentGuess)
+    window.localStorage.setItem('boardEval',JSON.stringify(guesses));
+    
     guessCount += 1;
     checkpoint += 9;
+    console.log(currentGuess);
+    
     
     if (currentGuess === answer) {
       // ADD MAX STREAK
