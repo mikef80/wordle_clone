@@ -8,12 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // sets number of rows and columns
   const rows = 5;
   let checkpoint = 0;
-  let gameState = 'IN PROGRESS';
+  let gameState = window.localStorage.getItem('gameState');
+  // window.localStorage.setItem('gameState', gameState);
   let guesses = [];
-
-
+  let currentSquareNo = 1;
+  
+  const guessedRGB = [[]];
+  let guessCount = 0;    
   
   
+  // console.log('rgb: ' + guessedRGB.length);
   currentPlayState();
   buildGrid(rows,3);
   setSwatch();
@@ -23,9 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const keys = document.querySelectorAll('.keyboard-row button');
   
-  const guessedRGB = [[]];
-  let currentSquareNo = 1;
-  let guessCount = 0;    
   
   
   // working on recording play state at any given time
@@ -78,14 +79,50 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastPlayedDate = window.localStorage.getItem('lastPlayedDate') || 0;
     // console.log(lastPlayedDate);
     // console.log(today === lastPlayedDate);
-    if (today === lastPlayedDate) {
+    let status = window.localStorage.getItem('gameState');
+    // console.log(window.localStorage.getItem('gameState') === 'IN PROGRESS');
+    if (today === lastPlayedDate && status === 'WON') {
       toggleStats();
+      console.log('this is where the argument for building the grid goes');
+      loadBoardState();
+    } else if (today !== lastPlayedDate) {
+      window.localStorage.setItem('gameState','IN PROGRESS');
+      window.localStorage.setItem('boardEval',[]);
     }
     // LOAD BOARD STATE HERE
+    if (window.localStorage.getItem('gameState') === 'IN PROGRESS') {
+      console.log('load board state');
+      loadBoardState();
+    }
+  }
+
+  function loadBoardState() {
+    console.log('Load board state');
+    // need to load board state in here
+    let boardState = window.localStorage.getItem('boardEval');
+    boardState = JSON.parse(boardState);
+    // console.log(boardState[0]);
+    // console.log(boardState[0][4]);
+    let n = 1;
+    // console.log('l: ' + boardState.length);
+    if (boardState) {
+      for (let i = 0; i < boardState.length; i++) {
+        for (let j = 0; j < 9; j++) {
+          let sq = document.querySelector(`.sq${n}`);
+          console.log(boardState[i][j]);
+          sq.innerHTML = boardState[i][j];
+          updateGuesses(Number(boardState[i][j]));
+          // n < 9 ? n++ : n;
+          n++
+        }
+        handleSubmitGuess();
+      }
+    }
+    currentSquareNo = n;
   }
   
   // getCurrentGuessArray
-  function getCurrentGuessArr() {
+  function getCurrentGuessArr() { //the answer to the problem of prefilling squares an submitting lies in here somehwere
     const numbersofGuesses = guessedRGB.length;
     return guessedRGB[numbersofGuesses - 1];
   }
@@ -181,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const interval = 200;
 
     let evalArr = [];
-
+    
     currentGuessArr.forEach((digit, index) => {
       setTimeout(() => {
         const tileColour = getTileColour(digit, index);
@@ -194,10 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // do board states and evaluations here
         evalArr.push(tileCorrect);
-        let object = {
-          'boardEval' : evalArr,
-          'gameState' : gameState
-        }
+        
         
         
       }, interval * index);
@@ -205,13 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     guesses.push(currentGuess)
     window.localStorage.setItem('boardEval',JSON.stringify(guesses));
-    
+   
     guessCount += 1;
     checkpoint += 9;
     console.log(currentGuess);
     
-    //test
     if (currentGuess === answer) {
+      // add iff statement here to stop stats increasing if you've already won but refresh the page
+
       // ADD MAX STREAK
       setTimeout(() => {
         window.alert('Congratulations!');
@@ -221,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentStreak = window.localStorage.getItem('currentStreak') || 0;
       window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
       gameState = 'WON';
+      window.localStorage.setItem('gameState',gameState);
       
       updateTotalGames();
       updateLastPlayedDate();
@@ -236,7 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const totalLosses = window.localStorage.getItem('totalLosses') || 0;
       window.localStorage.setItem('totalLosses', Number(totalLosses) + 1);
-      gameState = 'LOST'
+      gameState = 'LOST';
+      window.localStorage.setItem('gameState',gameState);
 
       updateTotalGames()
       updateLastPlayedDate();
@@ -245,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return
     }
 
+    updateLastPlayedDate();
     guessedRGB.push([]);
     // console.log(guessedRGB);
 
@@ -287,8 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let boardOne = document.querySelector('.board-1');
             boardOne.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-            square.classList.add('square','container','animate__animated');
-            square.id = (i * (cols * 3)) + (j + ((0 * cols) + 1));
+            let n = (i * (cols * 3)) + (j + ((0 * cols) + 1));
+            square.classList.add(`sq${n}`,'square','container','animate__animated');
+            square.id = String(n);
             boardOne.appendChild(square);
 
         }
@@ -301,8 +340,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let boardTwo = document.querySelector('.board-2');
             boardTwo.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-            square.classList.add('square','container','animate__animated');
-            square.id = (i * (cols * 3)) + (j + ((1 * cols) + 1));
+            let n = (i * (cols * 3)) + (j + ((1 * cols) + 1));
+            square.classList.add(`sq${n}`,'square','container','animate__animated');
+            square.id = String(n);
             boardTwo.appendChild(square);
 
         }
@@ -315,8 +355,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let boardThree = document.querySelector('.board-3');
             boardThree.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-            square.classList.add('square','container','animate__animated');
-            square.id = (i * (cols * 3)) + (j + ((2 * cols) + 1));
+            let n = (i * (cols * 3)) + (j + ((2 * cols) + 1));
+            square.classList.add(`sq${n}`,'square','container','animate__animated');
+            square.id = String(n);
             boardThree.appendChild(square);
 
         }
