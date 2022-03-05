@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkpoint += 9;
     console.log(currentGuess);
     
-    
+    //test
     if (currentGuess === answer) {
       // ADD MAX STREAK
       setTimeout(() => {
