@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   // console.log('rgb: ' + guessedRGB.length);
-  currentPlayState();
+  
   buildGrid(rows,3);
   setSwatch();
   updateStats();
@@ -26,14 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   checkPlayedToday();
   
   const keys = document.querySelectorAll('.keyboard-row button');
-  
-  
-  
-  // working on recording play state at any given time
-  function currentPlayState() {
-    let current = window.localStorage.getItem('currentPlayState') || [];
-    window.localStorage.setItem('currentPlayState', JSON.stringify({1:'test'}));
-  }
 
   // COUNTDOWN TO NEXT COLOURDLE
   function countdown() {
@@ -91,16 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // LOAD BOARD STATE HERE
     if (window.localStorage.getItem('gameState') === 'IN PROGRESS') {
-      console.log('load board state');
+      // console.log('load board state');
       loadBoardState();
     }
   }
 
   function loadBoardState() {
-    console.log('Load board state');
+    // console.log('Load board state');
     // need to load board state in here
     let boardState = window.localStorage.getItem('boardEval');
-    boardState = JSON.parse(boardState);
+    if (boardState) {
+      boardState = JSON.parse(boardState);
+
+    }
     // console.log(boardState[0]);
     // console.log(boardState[0][4]);
     let n = 1;
@@ -109,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let i = 0; i < boardState.length; i++) {
         for (let j = 0; j < 9; j++) {
           let sq = document.querySelector(`.sq${n}`);
-          console.log(boardState[i][j]);
+          // console.log(boardState[i][j]);
           sq.innerHTML = boardState[i][j];
           updateGuesses(Number(boardState[i][j]));
           // n < 9 ? n++ : n;
@@ -215,16 +210,25 @@ document.addEventListener('DOMContentLoaded', () => {
   
     
     const firstDigitId = guessCount * 9 + 1;
-    const interval = 200;
+    let interval = 200;
 
     let evalArr = [];
     
     currentGuessArr.forEach((digit, index) => {
-      setTimeout(() => {
+      if (gameState = 'WON') {
+        interval = 0;
+      }
+      setTimeout(() => { //WHY DOES MODAL CLOSE HERE?
         const tileColour = getTileColour(digit, index);
         const digitId = firstDigitId + index;
         const digitEl = document.getElementById(digitId);
-        digitEl.classList.add('animate__flipInX');
+        
+        if (gameState !== 'WON') {
+          digitEl.classList.add('animate__flipInX');
+        }
+        
+        
+        
         digitEl.style = `background-color:${tileColour};`;
         updateKeyColours(digit, tileColour);
         const tileCorrect = isTileCorrect(digit, index);
@@ -242,27 +246,37 @@ document.addEventListener('DOMContentLoaded', () => {
    
     guessCount += 1;
     checkpoint += 9;
-    console.log(currentGuess);
+    // console.log(currentGuess);
+
+    
     
     if (currentGuess === answer) {
       // add iff statement here to stop stats increasing if you've already won but refresh the page
+      let today = new Date().toLocaleDateString();
+      let lastPlayedDate = window.localStorage.getItem('lastPlayedDate') || 0;
+      let status = window.localStorage.getItem('gameState') || 0;
 
-      // ADD MAX STREAK
-      setTimeout(() => {
-        window.alert('Congratulations!');
-      },interval * 9)
-      const totalWins = window.localStorage.getItem('totalWins') || 0;
-      window.localStorage.setItem('totalWins', Number(totalWins) + 1);
-      const currentStreak = window.localStorage.getItem('currentStreak') || 0;
-      window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
-      gameState = 'WON';
-      window.localStorage.setItem('gameState',gameState);
-      
-      updateTotalGames();
-      updateLastPlayedDate();
-      updateStats();
-      toggleStats();
-      return;
+      if ((today !== lastPlayedDate) || ((today === lastPlayedDate) && status !== 'WON')) {
+        // ADD MAX STREAK
+        setTimeout(() => {
+          window.alert('Congratulations!');
+        },interval * 9)
+        const totalWins = window.localStorage.getItem('totalWins') || 0;
+        window.localStorage.setItem('totalWins', Number(totalWins) + 1);
+        const currentStreak = window.localStorage.getItem('currentStreak') || 0;
+        window.localStorage.setItem('currentStreak', Number(currentStreak) + 1);
+        gameState = 'WON';
+        window.localStorage.setItem('gameState',gameState);
+        updateTotalGames();
+        updateLastPlayedDate();
+        updateStats();
+        toggleStats();
+        return;
+      } else {
+        // toggleStats();
+        return
+      }
+
     }
 
     if (guessedRGB.length === rows) {
@@ -378,6 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleStats() {
     let stats = document.querySelector('.score-modal');
     stats.classList.toggle('show');
+    if (stats.classList.contains('show')) {
+      window.localStorage.setItem('modalView', 'true')
+    } else {
+      window.localStorage.setItem('modalView', 'false')
+    }
   }
 
   // UPDATE STATS SECTION
