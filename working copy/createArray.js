@@ -4,7 +4,7 @@ const returnRandomColour = () => {
     const b = Math.floor(Math.random() * 256).toString().padStart(3,0);
 
     // return [r,g,b];
-    return `${r}${b}${b}`;
+    return `${r}${g}${b}`;
 }
 
 let array = [];
