@@ -1,9 +1,10 @@
 const returnRandomColour = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
+    const r = Math.floor(Math.random() * 256).toString().padStart(3,0);
+    const g = Math.floor(Math.random() * 256).toString().padStart(3,0);
+    const b = Math.floor(Math.random() * 256).toString().padStart(3,0);
 
-    return [r,g,b];
+    // return [r,g,b];
+    return `${r}${g}${b}`;
 }
 
 let array = [];
