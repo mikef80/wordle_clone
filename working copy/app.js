@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let answer;
   let outputAnswer;
   // sets number of rows and columns
-  const rows = 5;
+  const rows = 6;
   let checkpoint = 0;
   let gameState = window.localStorage.getItem('gameState');
   // window.localStorage.setItem('gameState', gameState);
