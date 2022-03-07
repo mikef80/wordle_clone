@@ -336,7 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // boardOne.style.gridTemplateColumns = `repeat(1, 1fr)`;
         title.classList.add('gridTitle');
         title.style.gridColumn = "1 / 4";
-        title.innerHTML = 'Red';
+        title.innerHTML = `<h5>Red</h1>
+                            <i class="fa-solid fa-bracket-curly curly"></i>`;
         // title.style.backgroundColor = 'red';
         boardOne.appendChild(title);
 
