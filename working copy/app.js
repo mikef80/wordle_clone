@@ -74,9 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let status = window.localStorage.getItem('gameState');
     // console.log(window.localStorage.getItem('gameState') === 'IN PROGRESS');
     if (today === lastPlayedDate && (status === 'WON' || status === 'LOST')) {
-      toggleStats();
-
       loadBoardState();
+      setTimeout(() => {
+        toggleStats();
+      },300 * 9)
+
       kbDis = true;
     } else if (today === lastPlayedDate && status === 'IN PROGRESS') {
       loadBoardState();
@@ -211,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentGuess = currentGuessArr.join('');
     
     const firstDigitId = guessCount * 9 + 1;
-    let interval = 200;
+    let interval = 300;
 
     let evalArr = [];
     let forcedCountdown = 0;
@@ -249,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ADD MAX STREAK
         setTimeout(() => {
           window.alert('Congratulations!');
+          toggleStats();
         },interval * 9)
         const totalWins = window.localStorage.getItem('totalWins') || 0;
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
@@ -259,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalGames();
         updateLastPlayedDate();
         updateStats();
-        toggleStats();
+        
         return;
       } else {
         // toggleStats();
@@ -273,7 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let status = window.localStorage.getItem('gameState') || 0;
 
       if ((today !== lastPlayedDate) || ((today === lastPlayedDate) && status !== 'LOST')) {
-        window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
+        setTimeout(() => {
+          window.alert(`Sorry, you have no more guesses! The answer is ${outputAnswer}`);
+          toggleStats();
+        },interval * 9)
         document.getElementById('test').textContent = outputAnswer;
         window.localStorage.setItem('currentStreak', Number(0));
 
@@ -285,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTotalGames()
         updateLastPlayedDate();
         updateStats();
-        toggleStats();
         return
       } else {
         return;
