@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loadBoardState();
       setTimeout(() => {
         toggleStats();
-      },300 * 9)
+      },400 * 9)
 
       kbDis = true;
     } else if (today === lastPlayedDate && status === 'IN PROGRESS') {
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentGuess = currentGuessArr.join('');
     
     const firstDigitId = guessCount * 9 + 1;
-    let interval = 300;
+    let interval = 400;
 
     let evalArr = [];
     let forcedCountdown = 0;
