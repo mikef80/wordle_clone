@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // boardOne.style.gridTemplateColumns = `repeat(1, 1fr)`;
         title.classList.add('gridTitle');
         title.style.gridColumn = "1 / 4";
-        title.innerHTML = 'Red';
+        title.innerHTML = `Red`;
         // title.style.backgroundColor = 'red';
         boardOne.appendChild(title);
 
