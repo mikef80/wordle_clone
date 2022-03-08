@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let localStorageReset = window.localStorage.getItem('resetFlag') || 0;
     // console.log('lsr: ' + localStorageReset);
     if (!localStorageReset) {
-      console.log('this would reset stuff');
+      // console.log('this would reset stuff');
       window.localStorage.clear();
       window.localStorage.setItem('resetFlag', 1);
     }
