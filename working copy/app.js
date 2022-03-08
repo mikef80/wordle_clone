@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const guessedRGB = [[]];
   let guessCount = 0;    
   let kbDis = false;
+  let guessCountArr = JSON.parse(window.localStorage.getItem('guessCountArray')) || [];
   
   
   // console.log('rgb: ' + guessedRGB.length);
@@ -251,6 +252,10 @@ document.addEventListener('DOMContentLoaded', () => {
           window.alert('Congratulations!');
           toggleStats();
         },interval * 9)
+        console.log('guessCount: ' + guessCount);
+        guessCountArr.push(guessCount);
+        window.localStorage.setItem('guessCountArray', JSON.stringify(guessCountArr));
+        
         const totalWins = window.localStorage.getItem('totalWins') || 0;
         window.localStorage.setItem('totalWins', Number(totalWins) + 1);
         const currentStreak = window.localStorage.getItem('currentStreak') || 0;
