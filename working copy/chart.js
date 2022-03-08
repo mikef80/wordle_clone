@@ -1,8 +1,10 @@
 const arr = JSON.parse(window.localStorage.getItem('guessCountArray'));
 const counts = {};
 
-for (const num of arr) {
-  counts[num] = counts[num] ? counts[num] + 1 : 1;
+if(arr) {
+    for (const num of arr) {
+      counts[num] = counts[num] ? counts[num] + 1 : 1;
+    }
 }
 
 // console.log(counts[1], counts[2], counts[3], counts[4], counts[5]);

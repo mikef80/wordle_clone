@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let guessCount = 0;    
   let kbDis = false;
   let guessCountArr = JSON.parse(window.localStorage.getItem('guessCountArray')) || [];
-  
-  
+    
   // console.log('rgb: ' + guessedRGB.length);
   
+  clearLocalStorage();
   buildGrid(rows,3);
   setSwatch();
   updateStats();
@@ -28,6 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
   checkPlayedToday();
   
   const keys = document.querySelectorAll('.keyboard-row button');
+
+  function clearLocalStorage() {
+    let localStorageReset = window.localStorage.getItem('resetFlag') || 0;
+    // console.log('lsr: ' + localStorageReset);
+    if (!localStorageReset) {
+      console.log('this would reset stuff');
+      window.localStorage.clear();
+      window.localStorage.setItem('resetFlag', 1);
+    }
+  }
 
 
   // COUNTDOWN TO NEXT COLOURDLE

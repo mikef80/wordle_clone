@@ -278,7 +278,7 @@ i {
 
 
 #myChart, .myChart {
-    display: none;
+    /* display: none; */
     height: 300px;
     width: 300px;
 }
