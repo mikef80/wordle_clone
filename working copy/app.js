@@ -28,21 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const keys = document.querySelectorAll('.keyboard-row button');
 
-  // CAP NUMBERS AT 255 OR HIGHLIGHT ERROR
-  /* function capNum(input) {
-    console.log(input);
-    let l = input.length;
-    
-    for (let i = 0; i < l; i += 3) {
-      let test = (input[i] * 100) + (input[i+1] * 10) + (input[i+2] * 1);
-      console.log(test);
-
-      if (test < 0 || test > 255) {
-        return true;
-      }
-    }
-  } */
-
 
   // COUNTDOWN TO NEXT COLOURDLE
   function countdown() {
@@ -222,23 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentGuessArr.length !== 9) {
       window.alert('Guess must be 9 digits long!');
       return;
-    }
-
-    if (capNum(currentGuessArr)) {
-      window.alert('Values must be between 0 and 255');
-      let l = currentGuessArr.length;
-      let arr = currentGuessArr;
-      
-      for (let i = 0; i < l; i += 3) {
-        let total = (arr[i] * 100) + (arr[i+1] * 10) + (arr[i+2] * 1);
-        console.log(total);
-      }
-
-      }
-
-
-      return;
-    }
+    }   
 
     const currentGuess = currentGuessArr.join('');
     
@@ -258,7 +227,6 @@ document.addEventListener('DOMContentLoaded', () => {
         digitEl.classList.add('animate__flipInX');  
                 
         digitEl.style = `background-color:${tileColour};`;
-        updateKeyColours(digit, tileColour);
         const tileCorrect = isTileCorrect(digit, index);
 
         evalArr.push(tileCorrect);     
