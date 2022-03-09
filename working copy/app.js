@@ -234,11 +234,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(total);
       }
 
-      }
-
-
-      return;
     }
+
+
+  /*     return;
+    } */
 
     const currentGuess = currentGuessArr.join('');
     
