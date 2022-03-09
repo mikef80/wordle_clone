@@ -28,6 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
   checkPlayedToday();
   
   const keys = document.querySelectorAll('.keyboard-row button');
+  const statsShare = document.querySelector('.scores-share button');
+
+ 
+
+  statsShare.addEventListener('click', () => {
+    console.log('test');
+    if (navigator.share) {
+      navigator.share({
+        title: 'web.dev',
+        text: 'Check out web.dev.',
+        url: 'https://web.dev/',
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }
+  });
+
 
   function clearLocalStorage() {
     let localStorageReset = window.localStorage.getItem('resetFlag') || 0;
