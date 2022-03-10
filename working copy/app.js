@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
  
 
-  statsShare.addEventListener('click', () => {
+  /* statsShare.addEventListener('click', () => {
     console.log('test');
     if (navigator.share) {
       navigator.share({
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
     }
-  });
+  }); */
 
 
   function clearLocalStorage() {
