@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (capNum(currentGuessArr)) {
+    /* if (capNum(currentGuessArr)) {
       window.alert('Values must be between 0 and 255');
       let l = currentGuessArr.length;
       let arr = currentGuessArr;
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(total);
       }
 
-    }
+    } */
 
 
   /*     return;
